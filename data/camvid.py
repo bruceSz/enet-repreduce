@@ -23,15 +23,20 @@ class CamVid(data.Dataset):
     """
     # Training dataset root folders
     train_folder = 'train'
-    train_lbl_folder = 'trainannot'
+    #train_lbl_folder = 'trainannot'
+    train_lbl_folder = 'train_labels'
+
 
     # Validation dataset root folders
     val_folder = 'val'
-    val_lbl_folder = 'valannot'
+    #val_lbl_folder = 'valannot'
+    val_lbl_folder = 'val_labels'
 
     # Test dataset root folders
     test_folder = 'test'
-    test_lbl_folder = 'testannot'
+    #test_lbl_folder = 'testannot'
+    test_lbl_folder = 'test_labels'
+
 
     # Images extension
     img_extension = '.png'
@@ -64,6 +69,8 @@ class CamVid(data.Dataset):
         self.transform = transform
         self.label_transform = label_transform
         self.loader = loader
+
+        print("mode is: ", self.mode)
 
         if self.mode.lower() == 'train':
             # Get the training data and labels filepaths

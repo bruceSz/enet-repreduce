@@ -52,6 +52,8 @@ def load_dataset(dataset):
         shuffle=True,
         num_workers=args.workers)
 
+    print("trian dataset done.")
+
     # Load the validation set as tensors
     val_set = dataset(
         args.dataset_dir,
@@ -76,13 +78,16 @@ def load_dataset(dataset):
         shuffle=False,
         num_workers=args.workers)
 
+
+    print("data loader done.")
+
     # Get encoding between pixel valus in label images and RGB colors
     class_encoding = train_set.color_encoding
 
     # Remove the road_marking class from the CamVid dataset as it's merged
     # with the road class
     if args.dataset.lower() == 'camvid':
-        del class_encoding['road_marking']
+        del class_encoding['road_marking']  
 
     # Get number of classes to predict
     num_classes = len(class_encoding)
@@ -130,7 +135,7 @@ def load_dataset(dataset):
             ignore_index = list(class_encoding).index('unlabeled')
             class_weights[ignore_index] = 0
 
-    print("Class weights:", class_weights)
+    #print("Class weights:", class_weights)
 
     return (train_loader, val_loader,
             test_loader), class_weights, class_encoding
@@ -316,6 +321,7 @@ if __name__ == '__main__':
                                       args.name)[0]
 
         if args.mode.lower() == 'test':
-            print(model)
+            pass
+            #print(model)
 
         test(model, test_loader, w_class, class_encoding)

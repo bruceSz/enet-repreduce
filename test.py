@@ -41,6 +41,14 @@ class Test:
             inputs = batch_data[0].to(self.device)
             labels = batch_data[1].to(self.device)
 
+            print(labels[0].shape)
+            print(inputs[0].shape)
+
+            print(type(labels))
+            print(type(inputs))
+
+
+
             with torch.no_grad():
                 # Forward propagation
                 outputs = self.model(inputs)
