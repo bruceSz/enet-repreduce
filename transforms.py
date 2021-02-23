@@ -83,12 +83,20 @@ class LongTensorToRGBPIL(object):
             tensor.unsqueeze_(0)
 
         color_tensor = torch.ByteTensor(3, tensor.size(1), tensor.size(2))
+        print("color tensor: ", color_tensor.shape)
 
         for index, (class_name, color) in enumerate(self.rgb_encoding.items()):
             # Get a mask of elements equal to index
+            print("index is: ", index)
+            print(tensor.shape)
+            #tmp = torch.eq(tensor)
             mask = torch.eq(tensor, index).squeeze_()
+            print("mask shape: ", mask.shape)
+            mask = mask.squeeze()
+            print("after squeeze mask shape: ", mask.shape)
             # Fill color_tensor with corresponding colors
             for channel, color_value in enumerate(color):
+                #pass
                 color_tensor[channel].masked_fill_(mask, color_value)
 
         return ToPILImage()(color_tensor)
